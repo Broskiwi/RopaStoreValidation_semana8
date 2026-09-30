@@ -1,9 +1,11 @@
-package com.duoc.ropastorevalidation.Sucursal.model;
+package com.duoc.ropastorevalidation.sucursal.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.duoc.ropastorevalidation.producto.model.Producto;
+import jakarta.persistence.*;
 
+import java.util.List;
+
+@Entity
 public class Sucursal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +13,8 @@ public class Sucursal {
     private String nombre;
     private String direccion;
     private String ciudad;
+    @OneToMany(mappedBy = "sucursal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Producto> productos;
 
     public Sucursal() {
     }

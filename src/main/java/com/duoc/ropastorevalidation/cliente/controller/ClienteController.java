@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/cliente")
@@ -24,7 +25,9 @@ public class ClienteController {
 
     @GetMapping("/?rut={rut}")
     public ResponseEntity<Cliente> findByRut(@PathVariable String rut){
-        return ResponseEntity.ok(clienteService.getByRut(rut));
+        Optional<Cliente> cliente = clienteService.getByRut(rut);
+        return cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+
     }
 
     @PostMapping

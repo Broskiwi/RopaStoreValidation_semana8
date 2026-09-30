@@ -11,8 +11,8 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name="cliente_id")
     private Cliente cliente;
-    private Long clienteId;
     private LocalDate fechaPedido;
     private int total;
     private Estado estado = Estado.CREADO;
@@ -20,18 +20,19 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long clienteId, LocalDate fechaPedido, int total) {
-        this.clienteId = clienteId;
+    public Pedido(Cliente cliente, LocalDate fechaPedido, int total, Estado estado) {
+        this.cliente = cliente;
         this.fechaPedido = fechaPedido;
         this.total = total;
+        this.estado = estado;
     }
 
-    public Long getClienteId() {
-        return clienteId;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public LocalDate getFechaPedido() {

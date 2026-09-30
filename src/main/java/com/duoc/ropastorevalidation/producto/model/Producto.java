@@ -1,6 +1,6 @@
 package com.duoc.ropastorevalidation.producto.model;
 
-import com.duoc.ropastorevalidation.Sucursal.model.Sucursal;
+import com.duoc.ropastorevalidation.sucursal.model.Sucursal;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,18 +13,18 @@ public class Producto {
     private String categoria;
     private int stock;
     @ManyToOne
+    @JoinColumn(name="sid")
     private Sucursal sucursal;
-    private Long idSucursal;
 
     public Producto() {
     }
 
-    public Producto(String nombre, int precio, String categoria, int stock, Long idSucursal) {
+    public Producto(String nombre, int precio, String categoria, int stock, Sucursal sucursal) {
         this.nombre = nombre;
         this.precio = precio;
         this.categoria = categoria;
         this.stock = stock;
-        this.idSucursal = idSucursal;
+        this.sucursal = sucursal;
     }
 
     public Long getId() {
@@ -67,11 +67,11 @@ public class Producto {
         this.stock = stock;
     }
 
-    public Long getIdSucursal() {
-        return idSucursal;
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
-    public void setIdSucursal(Long idSucursal) {
-        this.idSucursal = idSucursal;
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }

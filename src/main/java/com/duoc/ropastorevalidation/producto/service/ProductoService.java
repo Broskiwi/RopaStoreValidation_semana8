@@ -19,8 +19,8 @@ public class ProductoService {
         return productoRepository.findAll();
     }
 
-    public Producto findById(Long id) {
-        return  productoRepository.findById(id).orElse(null);
+    public Optional<Producto> findById(Long id) {
+        return  Optional.of(productoRepository.findById(id)).orElse(null);
     }
 
     public Producto create(Producto producto) {
@@ -28,7 +28,7 @@ public class ProductoService {
     }
 
     public Producto update(Long id, Producto producto) {
-        Optional<Producto> oldProduct  = Optional.ofNullable(findById(id));
+        Optional<Producto> oldProduct  = findById(id);
         if(oldProduct.isPresent()){
             oldProduct.get().setNombre(producto.getNombre());
             oldProduct.get().setPrecio(producto.getPrecio());
@@ -37,7 +37,7 @@ public class ProductoService {
         } else return  null;
     }
     public Long deleteById(Long id) {
-        Optional<Producto> oldProduct = Optional.ofNullable(findById(id));
+        Optional<Producto> oldProduct = findById(id);
         if(oldProduct.isPresent()){
             Long deletedId = oldProduct.get().getId();
             productoRepository.deleteById(id);
