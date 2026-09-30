@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/pedidos")
@@ -29,9 +30,14 @@ public class PedidoController {
 
     @GetMapping("/cliente/{id}")
     public ResponseEntity<List<Pedido>> findByClienteId(@PathVariable Long id){
-        Cliente realCliente = clienteService.getById(id);
-        List<Pedido> pedidosCliente = pedidoService.getAllByClient(realCliente);
-        return ResponseEntity.ok(pedidosCliente);
+        Optional<Cliente> realCliente = clienteService.getById(id);
+        if(realCliente.isPresent()){
+            Optional<List<Pedido>> pedidosCliente = pedidoService.getAllByClient(realCliente.get());
+            return pedidosCliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @PostMapping

@@ -19,12 +19,12 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente getByRut(String rut) {
-        return clienteRepository.findByRut(rut);
+    public Optional<Cliente> getByRut(String rut) {
+        return Optional.of(clienteRepository.findByRut(rut));
     }
 
-    public Cliente getById(Long id) {
-        return clienteRepository.findById(id).orElse(null);
+    public Optional<Cliente> getById(Long id) {
+        return Optional.of(clienteRepository.findById(id)).orElse(null);
     }
 
     public Cliente create(Cliente cliente) {
@@ -32,7 +32,7 @@ public class ClienteService {
     }
 
     public Cliente update(Long id, Cliente cliente) {
-        Optional<Cliente> oldCliente = Optional.ofNullable(getById(id));
+        Optional<Cliente> oldCliente = getById(id);
         if (oldCliente.isPresent()) {
             oldCliente.get().setRut(cliente.getRut());
             oldCliente.get().setNombre(cliente.getNombre());
@@ -45,7 +45,7 @@ public class ClienteService {
     }
 
     public Long deleteById(Long id) {
-        Optional<Cliente> oldCliente = Optional.ofNullable(getById(id));
+        Optional<Cliente> oldCliente = getById(id);
         if (oldCliente.isPresent()) {
             clienteRepository.deleteById(id);
             return id;

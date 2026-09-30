@@ -21,11 +21,11 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
-    public Pedido getById(Long id) {
-        return pedidoRepository.findById(id).orElse(null);
+    public Optional<Pedido> getById(Long id) {
+        return Optional.of(pedidoRepository.findById(id)).orElse(null);
     }
-    public List<Pedido> getAllByClient(Cliente cliente) {
-        return pedidoRepository.getAllByCliente(cliente);
+    public Optional<List<Pedido>> getAllByClient(Cliente cliente) {
+        return Optional.of(pedidoRepository.getAllByCliente(cliente));
     }
 
     public Pedido create(Pedido pedido) {
@@ -33,7 +33,7 @@ public class PedidoService {
     }
 
     public Pedido update(Long id, Pedido pedido) {
-        Optional<Pedido> oldPedido = Optional.ofNullable(getById(id));
+        Optional<Pedido> oldPedido = getById(id);
         if (oldPedido.isPresent()) {
             oldPedido.get().setEstado(pedido.getEstado());
             oldPedido.get().setFechaPedido(pedido.getFechaPedido());
@@ -44,7 +44,7 @@ public class PedidoService {
         }
     }
     public Pedido updateStatusById(Long id, Estado estado) {
-        Optional<Pedido> oldPedido = Optional.ofNullable(getById(id));
+        Optional<Pedido> oldPedido = getById(id);
         if (oldPedido.isPresent()) {
             oldPedido.get().setEstado(estado);
             return pedidoRepository.save(oldPedido.get());
@@ -54,7 +54,7 @@ public class PedidoService {
     }
 
     public Long deleteById(Long id) {
-        Optional<Pedido> oldCliente = Optional.ofNullable(getById(id));
+        Optional<Pedido> oldCliente = getById(id);
         if (oldCliente.isPresent()) {
             pedidoRepository.deleteById(id);
             return id;
