@@ -21,7 +21,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> jsonInvalido(HttpMessageNotReadableException e) {
-        return respuesta(HttpStatus.BAD_REQUEST, "El JSON enviado no es válido o tiene valores incorrectos");
+        String detalle = e.getMostSpecificCause().getMessage();
+        log.warn("JSON inválido: {}", detalle);
+        return ResponseEntity.badRequest().body(Map.of(
+                "error", "El JSON enviado no es válido o tiene valores incorrectos",
+                "detalle", detalle));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
