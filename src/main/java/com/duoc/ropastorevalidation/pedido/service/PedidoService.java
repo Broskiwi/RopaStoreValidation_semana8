@@ -34,11 +34,14 @@ public class PedidoService {
     }
 
     public Pedido update(Long id, Pedido pedido) {
-        Optional<Pedido> oldPedido = getById(id);
+    Optional<Pedido> oldPedido = getById(id);
         if (oldPedido.isPresent()) {
             oldPedido.get().setEstado(pedido.getEstado());
             oldPedido.get().setFechaPedido(pedido.getFechaPedido());
             oldPedido.get().setTotal(pedido.getTotal());
+            if (pedido.getCliente() != null) {
+                oldPedido.get().setCliente(pedido.getCliente());
+            }
             return pedidoRepository.save(oldPedido.get());
         } else {
             return null;
@@ -55,8 +58,8 @@ public class PedidoService {
     }
 
     public Long deleteById(Long id) {
-        Optional<Pedido> oldCliente = getById(id);
-        if (oldCliente.isPresent()) {
+        Optional<Pedido> oldPedido = getById(id);
+        if (oldPedido.isPresent()) {
             pedidoRepository.deleteById(id);
             return id;
         } else {

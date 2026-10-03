@@ -21,7 +21,7 @@ import com.duoc.ropastorevalidation.pedido.model.Pedido;
 import com.duoc.ropastorevalidation.pedido.service.PedidoService;
 
 @RestController
-@RequestMapping("api/pedidos")
+@RequestMapping("/api/pedidos")
 public class PedidoController {
 
     private final PedidoService pedidoService;
