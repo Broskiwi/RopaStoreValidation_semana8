@@ -1,13 +1,14 @@
 package com.duoc.ropastorevalidation.pedido.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import com.duoc.ropastorevalidation.cliente.model.Cliente;
 import com.duoc.ropastorevalidation.pedido.model.Estado;
 import com.duoc.ropastorevalidation.pedido.model.Pedido;
 import com.duoc.ropastorevalidation.pedido.repository.PedidoRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PedidoService {
@@ -22,10 +23,10 @@ public class PedidoService {
     }
 
     public Optional<Pedido> getById(Long id) {
-        return Optional.of(pedidoRepository.findById(id)).orElse(null);
+        return pedidoRepository.findById(id);
     }
-    public Optional<List<Pedido>> getAllByClient(Cliente cliente) {
-        return Optional.of(pedidoRepository.getAllByCliente(cliente));
+    public List<Pedido> getAllByClient(Cliente cliente) {
+        return pedidoRepository.getAllByCliente(cliente);
     }
 
     public Pedido create(Pedido pedido) {
